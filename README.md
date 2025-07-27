@@ -47,5 +47,5 @@ The NetworkSecurity project is an end-to-end machine learning pipeline designed 
 ## Setup Instructions
 Clone the repository:
 
-git clone https://github.com/sl-93/NetworkSecurity.git
-cd NetworkSecurity
+- git clone https://github.com/sl-93/NetworkSecurity.git
+- cd NetworkSecurity
