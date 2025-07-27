@@ -42,7 +42,7 @@ class ModelTrainer:
 
             for key, value in best_params.items():
                 mlflow.log_param(key, value)
-                
+
             mlflow.sklearn.log_model(best_model, "model")
 
     def train_model(self, x_train, y_train, x_test, y_test):
@@ -115,6 +115,8 @@ class ModelTrainer:
 
         Network_Model = NetworkModel(preprocessor, best_model)
         save_object(self.model_trainer_config.trained_model_file_path, Network_Model)
+
+        save_object("final_models/model.pkl", best_model)
 
         ## Model Trainer Artifact
         model_trainer_artifact = ModelTrainerArtifact(self.model_trainer_config.trained_model_file_path,
