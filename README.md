@@ -1,8 +1,9 @@
-NetworkSecurity: MLOps-Driven Network Security System
-Overview
+## NetworkSecurity: MLOps-Driven Network Security System
+## Overview
+
 The NetworkSecurity project is an end-to-end machine learning pipeline designed to detect and mitigate phishing attacks within a corporate network environment. Leveraging MLOps best practices, this system automates data ingestion, validation, transformation, model training, evaluation, and deployment, ensuring robust and scalable security solutions.
 
-Key Features
+## Key Features
 - Data Ingestion & Validation: Automates the extraction of network traffic data, performs schema validation, and detects data drift to maintain model accuracy.
 
 - Data Transformation: Utilizes techniques like KNN imputation to handle missing values, ensuring clean and reliable datasets.
@@ -15,7 +16,7 @@ Key Features
 
 - Artifact Management: Integrates with AWS S3 for storing model artifacts and logs, ensuring traceability and reproducibility.
 
-MLOps Architecture
+## MLOps Architecture
 
 - The project follows a structured MLOps pipeline:
 
@@ -28,7 +29,7 @@ MLOps Architecture
 - Model Training: Trains a Random Forest classifier and evaluates its performance.
 
 
-Technologies Used
+## Technologies Used
 - Programming Language: Python 3.10
 
 - Machine Learning: scikit-learn (RandomForestClassifier, KNNImputer), pandas, numpy
@@ -43,7 +44,7 @@ Technologies Used
 
 - Other Tools: awscli
 
-Setup Instructions
+## Setup Instructions
 Clone the repository:
 
 git clone https://github.com/sl-93/NetworkSecurity.git
