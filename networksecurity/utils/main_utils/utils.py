@@ -81,7 +81,7 @@ def evaluate_models(X_train,
                     param):
     try:
         report = {}
-
+        params = {}
         for i in range(len(list(models))):
             model = list(models.values())[i]
             para=param[list(models.keys())[i]]
@@ -103,8 +103,9 @@ def evaluate_models(X_train,
             test_model_score = r2_score(y_test, y_test_pred)
 
             report[list(models.keys())[i]] = test_model_score
+            params[list(models.keys())[i]] = gs.best_params_
 
-        return report
+        return report, params
 
     except Exception as e:
         raise NetworkSecurityException(e, sys)

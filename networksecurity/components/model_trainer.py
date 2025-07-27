@@ -18,6 +18,7 @@ from sklearn.ensemble import (
     GradientBoostingClassifier,
     RandomForestClassifier,
 )
+import mlflow
 
 class ModelTrainer:
     def __init__(self, model_trainer_config: ModelTrainerConfig,
@@ -28,6 +29,22 @@ class ModelTrainer:
         except Exception as e:
             raise NetworkSecurityException(e, sys)
     
+    def track_mlflow(self, best_model, classification_metric, best_params):
+        with mlflow.start_run():
+            f1_score = classification_metric.f1_score
+            precision_score = classification_metric.precision_score
+            recall_score = classification_metric.recall_score
+            best_params = best_params
+
+            mlflow.log_metric("f1_score", f1_score)
+            mlflow.log_metric("precision_score", precision_score)
+            mlflow.log_metric("recall_score", recall_score)
+
+            for key, value in best_params.items():
+                mlflow.log_param(key, value)
+                
+            mlflow.sklearn.log_model(best_model, "model")
+
     def train_model(self, x_train, y_train, x_test, y_test):
         models = {
                 "Random Forest": RandomForestClassifier(verbose=1),
@@ -64,7 +81,7 @@ class ModelTrainer:
             
         }
 
-        model_report:dict = evaluate_models(x_train, 
+        model_report, params = evaluate_models(x_train, 
                                             y_train, 
                                             x_test, 
                                             y_test,
@@ -78,12 +95,18 @@ class ModelTrainer:
         ]
 
         best_model = models[best_model_name]
+        best_params = params[best_model_name]
 
         y_train_pred = best_model.predict(x_train)
         classification_train_metric = get_classification_score(y_train, y_train_pred)
 
+        # Track the experiments with MLFow
+        self.track_mlflow(best_model, classification_train_metric, best_params)
+
         y_test_pred = best_model.predict(x_test)
         classification_test_metric = get_classification_score(y_test, y_test_pred)
+
+        self.track_mlflow(best_model, classification_test_metric, best_params)
 
         preprocessor = load_object(file_path=self.data_transformation_artifact.transformed_object_file_path)
             
